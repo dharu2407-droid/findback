@@ -1,0 +1,1022 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>FindBack - Home</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #faf9ff;
+      color: #17141f;
+    }
+
+    header {
+      background: #6d28d9;
+      color: white;
+      padding: 22px 40px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 30px;
+    }
+
+    header p {
+      margin-top: 5px;
+    }
+
+    .logout {
+      background: white;
+      color: #6d28d9;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .hero,
+    .form-section,
+    .controls {
+      background: white;
+      border: 1px solid #e9e4f2;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+    }
+
+    .hero {
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .hero h2 {
+      font-size: 34px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #6b6475;
+    }
+
+    .form-section {
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+
+    .form-section h2 {
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-grid input,
+    .form-grid textarea,
+    .form-grid select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d8d0e3;
+      border-radius: 9px;
+      font-size: 15px;
+    }
+
+    .form-grid textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .image-label {
+      font-weight: bold;
+      margin-bottom: -5px;
+    }
+
+    .image-help {
+      font-size: 13px;
+      color: #6b6475;
+      margin-top: -8px;
+    }
+
+    button {
+      padding: 13px 22px;
+      border: none;
+      border-radius: 9px;
+      background: #6d28d9;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #5b21b6;
+    }
+
+    .controls {
+      padding: 22px;
+      margin-bottom: 25px;
+    }
+
+    .controls input,
+    .controls select {
+      padding: 13px;
+      margin: 5px;
+      border: 1px solid #d8d0e3;
+      border-radius: 9px;
+      font-size: 15px;
+    }
+
+    .items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .item-card {
+      background: white;
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid #e9e4f2;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+    }
+
+    .item-card h3 {
+      margin: 12px 0;
+    }
+
+    .item-card p {
+      margin: 8px 0;
+      color: #4b4552;
+    }
+
+    .item-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #ede9fe;
+      color: #6d28d9;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #6b6475;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #6b6475;
+    }
+
+    @media (max-width: 700px) {
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      header {
+        padding: 20px;
+      }
+
+      main {
+        padding: 10px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div>
+
+    <h1>FindBack</h1>
+
+    <p>
+      Lost something? Let's find it back.
+    </p>
+
+  </div>
+
+
+  <button
+    class="logout"
+    onclick="logout()"
+  >
+    Logout
+  </button>
+
+</header>
+
+
+<main>
+
+
+  <section class="hero">
+
+    <h2>Lost & Found</h2>
+
+    <p>
+      Find lost items or help someone find theirs.
+    </p>
+
+  </section>
+
+
+  <!-- REPORT ITEM -->
+
+  <section class="form-section">
+
+    <h2>
+      Report Lost / Found Item
+    </h2>
+
+
+    <form id="itemForm">
+
+      <div class="form-grid">
+
+
+        <input
+          type="text"
+          id="title"
+          placeholder="Item name"
+          required
+        >
+
+
+        <select
+          id="type"
+          required
+        >
+
+          <option value="">
+            Select type
+          </option>
+
+          <option value="lost">
+            Lost
+          </option>
+
+          <option value="found">
+            Found
+          </option>
+
+        </select>
+
+
+        <input
+          type="text"
+          id="category"
+          placeholder="Category"
+          required
+        >
+
+
+        <input
+          type="text"
+          id="location"
+          placeholder="Location"
+          required
+        >
+
+
+        <textarea
+          id="description"
+          class="full"
+          placeholder="Describe the item..."
+          required
+        ></textarea>
+
+
+        <!-- IMAGE -->
+
+        <div class="full image-label">
+          Item Photo (Optional)
+        </div>
+
+
+        <input
+          type="file"
+          id="image"
+          class="full"
+          accept="image/*"
+        >
+
+
+        <div class="full image-help">
+          You can upload a photo of the lost/found item. This is optional.
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <input
+          type="text"
+          id="contactName"
+          placeholder="Your name"
+          required
+        >
+
+
+        <input
+          type="email"
+          id="contactEmail"
+          placeholder="Your email"
+          required
+        >
+
+
+        <input
+          type="tel"
+          id="contactPhone"
+          placeholder="Your phone number"
+          required
+        >
+
+
+        <button
+          type="submit"
+          class="full"
+        >
+          Post Item
+        </button>
+
+
+      </div>
+
+    </form>
+
+
+    <div
+      id="formMessage"
+      class="message"
+    ></div>
+
+
+  </section>
+
+
+  <!-- SEARCH / FILTER -->
+
+  <section class="controls">
+
+    <input
+      type="text"
+      id="search"
+      placeholder="Search item..."
+    >
+
+
+    <select id="filterType">
+
+      <option value="">
+        All Items
+      </option>
+
+      <option value="lost">
+        Lost Items
+      </option>
+
+      <option value="found">
+        Found Items
+      </option>
+
+    </select>
+
+
+    <input
+      type="text"
+      id="filterCategory"
+      placeholder="Category"
+    >
+
+
+    <input
+      type="text"
+      id="filterLocation"
+      placeholder="Location"
+    >
+
+
+    <button
+      type="button"
+      onclick="searchItems()"
+    >
+      Search
+    </button>
+
+
+    <button
+      type="button"
+      onclick="loadItems()"
+    >
+      Show All
+    </button>
+
+  </section>
+
+
+  <!-- ITEMS -->
+
+  <section
+    id="items"
+    class="items"
+  >
+
+    <div class="empty">
+      Loading items...
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<footer>
+
+  <p>
+    &copy; 2026 FindBack
+  </p>
+
+</footer>
+
+
+<script>
+
+
+/* =========================
+   LOGIN CHECK
+========================= */
+
+const token =
+  localStorage.getItem("findbackToken");
+
+
+if (!token) {
+
+  window.location.href = "/";
+
+}
+
+
+/* =========================
+   LOAD ALL ITEMS
+========================= */
+
+async function loadItems() {
+
+  try {
+
+    const response =
+      await fetch("/api/items");
+
+
+    const data =
+      await response.json();
+
+
+    displayItems(data.items);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    document
+      .getElementById("items")
+      .innerHTML =
+      '<div class="empty">Unable to load items.</div>';
+
+  }
+
+}
+
+
+/* =========================
+   SEARCH + FILTER
+========================= */
+
+async function searchItems() {
+
+  const search =
+    document
+      .getElementById("search")
+      .value
+      .trim();
+
+
+  const type =
+    document
+      .getElementById("filterType")
+      .value;
+
+
+  const category =
+    document
+      .getElementById("filterCategory")
+      .value
+      .trim();
+
+
+  const location =
+    document
+      .getElementById("filterLocation")
+      .value
+      .trim();
+
+
+  const params =
+    new URLSearchParams();
+
+
+  if (search !== "") {
+
+    params.set(
+      "search",
+      search
+    );
+
+  }
+
+
+  if (type !== "") {
+
+    params.set(
+      "type",
+      type
+    );
+
+  }
+
+
+  if (category !== "") {
+
+    params.set(
+      "category",
+      category
+    );
+
+  }
+
+
+  if (location !== "") {
+
+    params.set(
+      "location",
+      location
+    );
+
+  }
+
+
+  const queryString =
+    params.toString();
+
+
+  const url =
+    queryString
+      ? "/api/items?" + queryString
+      : "/api/items";
+
+
+  try {
+
+    const response =
+      await fetch(url);
+
+
+    const data =
+      await response.json();
+
+
+    displayItems(data.items);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    document
+      .getElementById("items")
+      .innerHTML =
+      '<div class="empty">Search failed.</div>';
+
+  }
+
+}
+
+
+/* =========================
+   DISPLAY ITEMS
+========================= */
+
+function displayItems(items) {
+
+  const container =
+    document
+      .getElementById("items");
+
+
+  if (
+    !items ||
+    items.length === 0
+  ) {
+
+    container.innerHTML =
+      '<div class="empty">No items found.</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    items.map(item => `
+
+      <div class="item-card">
+
+        ${
+          item.image
+            ? `<img
+                 src="${item.image}"
+                 class="item-image"
+                 alt="Item photo"
+               >`
+            : ""
+        }
+
+
+        <span class="badge">
+          ${(item.type || "").toUpperCase()}
+        </span>
+
+
+        <h3>
+          ${item.title || ""}
+        </h3>
+
+
+        <p>
+          <strong>Description:</strong>
+          ${item.description || ""}
+        </p>
+
+
+        <p>
+          <strong>Category:</strong>
+          ${item.category || ""}
+        </p>
+
+
+        <p>
+          <strong>Location:</strong>
+          ${item.location || ""}
+        </p>
+
+
+        <p>
+          <strong>Contact:</strong>
+          ${item.contactName || ""}
+        </p>
+
+
+        <p>
+          <strong>Email:</strong>
+          ${item.contactEmail || ""}
+        </p>
+
+
+        <p>
+          <strong>Phone:</strong>
+          ${item.contactPhone || ""}
+        </p>
+
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* =========================
+   POST ITEM
+========================= */
+
+document
+  .getElementById("itemForm")
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const message =
+        document
+          .getElementById("formMessage");
+
+
+      message.style.display =
+        "block";
+
+
+      message.style.background =
+        "#ede9fe";
+
+
+      message.style.color =
+        "#6d28d9";
+
+
+      message.textContent =
+        "Posting item...";
+
+
+      /*
+        IMPORTANT:
+
+        Because image upload is supported,
+        we use FormData instead of JSON.
+      */
+
+      const formData =
+        new FormData();
+
+
+      formData.append(
+        "title",
+        document
+          .getElementById("title")
+          .value
+          .trim()
+      );
+
+
+      formData.append(
+        "description",
+        document
+          .getElementById("description")
+          .value
+          .trim()
+      );
+
+
+      formData.append(
+        "category",
+        document
+          .getElementById("category")
+          .value
+          .trim()
+      );
+
+
+      formData.append(
+        "location",
+        document
+          .getElementById("location")
+          .value
+          .trim()
+      );
+
+
+      formData.append(
+        "type",
+        document
+          .getElementById("type")
+          .value
+      );
+
+
+      formData.append(
+        "contactName",
+        document
+          .getElementById("contactName")
+          .value
+          .trim()
+      );
+
+
+      formData.append(
+        "contactEmail",
+        document
+          .getElementById("contactEmail")
+          .value
+          .trim()
+      );
+
+
+      formData.append(
+        "contactPhone",
+        document
+          .getElementById("contactPhone")
+          .value
+          .trim()
+      );
+
+
+      const imageInput =
+        document
+          .getElementById("image");
+
+
+      if (
+        imageInput.files &&
+        imageInput.files.length > 0
+      ) {
+
+        formData.append(
+          "image",
+          imageInput.files[0]
+        );
+
+      }
+
+
+      try {
+
+        const response =
+          await fetch(
+            "/api/items",
+            {
+
+              method: "POST",
+
+              headers: {
+
+                /*
+                  DO NOT set Content-Type here.
+
+                  Browser automatically sets the
+                  multipart/form-data boundary.
+                */
+
+                Authorization:
+                  "Bearer " + token
+
+              },
+
+              body: formData
+
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (response.ok) {
+
+          message.textContent =
+            "Item posted successfully!";
+
+
+          message.style.background =
+            "#ede9fe";
+
+
+          message.style.color =
+            "#6d28d9";
+
+
+          document
+            .getElementById("itemForm")
+            .reset();
+
+
+          loadItems();
+
+
+        } else {
+
+          message.textContent =
+            data.message ||
+            "Failed to post item.";
+
+
+          message.style.background =
+            "#fee2e2";
+
+
+          message.style.color =
+            "#991b1b";
+
+        }
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        message.textContent =
+          "Unable to connect to server.";
+
+
+        message.style.background =
+          "#fee2e2";
+
+
+        message.style.color =
+          "#991b1b";
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
+
+  localStorage.removeItem(
+    "findbackToken"
+  );
+
+
+  window.location.href =
+    "/";
+
+}
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+loadItems();
+
+</script>
+
+
+</body>
+
+</html>
+

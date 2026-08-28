@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FindBack Login</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #faf9ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .box {
+      width: 350px;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #6d28d9;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #6d28d9;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>FindBack</h1>
+
+    <h2>Login</h2>
+
+    <form id="loginForm">
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        required
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        required
+      >
+
+      <button type="submit">
+        Login
+      </button>
+
+    </form>
+
+    <div id="message"></div>
+
+  </div>
+
+
+  <script>
+
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const message =
+          document.getElementById("message");
+
+        message.textContent = "Logging in...";
+
+
+        const email =
+          document.getElementById("email").value.trim();
+
+        const password =
+          document.getElementById("password").value;
+
+
+        try {
+
+          const response =
+            await fetch("/api/auth/login", {
+
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                email: email,
+                password: password
+              })
+
+            });
+
+
+          const data =
+            await response.json();
+
+
+          if (response.ok) {
+
+            localStorage.setItem(
+              "findbackToken",
+              data.token
+            );
+
+            message.textContent =
+              "Login successful!";
+
+            setTimeout(function() {
+
+              window.location.href =
+                "/home.html";
+
+            }, 500);
+
+          } else {
+
+            message.textContent =
+              data.message || "Login failed.";
+
+          }
+
+
+        } catch (error) {
+
+          message.textContent =
+            "Server connection failed.";
+
+          console.error(error);
+
+        }
+
+      });
+
+  </script>
+
+</body>
+</html>
+
