@@ -1,7 +1,8 @@
+```javascript
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const User = require("../models/user");
 
 const router = express.Router();
 
@@ -70,7 +71,10 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(
+      password,
+      user.password
+    );
 
     if (!passwordMatch) {
       return res.status(401).json({
@@ -108,3 +112,4 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+```
