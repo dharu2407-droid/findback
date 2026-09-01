@@ -1,4 +1,4 @@
-```javascript
+
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -46,7 +46,6 @@ router.post("/register", async (req, res) => {
     });
   } catch (error) {
     console.error("Register error:", error.message);
-
     res.status(500).json({
       message: "Server error"
     });
@@ -71,10 +70,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const passwordMatch = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       return res.status(401).json({
@@ -104,7 +100,6 @@ router.post("/login", async (req, res) => {
     });
   } catch (error) {
     console.error("Login error:", error.message);
-
     res.status(500).json({
       message: "Server error"
     });
@@ -112,4 +107,4 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
-```
+
