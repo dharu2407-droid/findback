@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -11,9 +10,12 @@ const itemRoutes = require("./routes/items");
 
 const app = express();
 
+// =========================
+// MIDDLEWARE
+// =========================
+
 app.use(cors());
 
-// Disable CSP for our local development frontend
 app.use(
   helmet({
     contentSecurityPolicy: false
@@ -22,25 +24,21 @@ app.use(
 
 app.use(express.json());
 
+// =========================
+// FRONTEND
+// =========================
 
-// Frontend
 app.use(express.static("public"));
 
+// =========================
+// API ROUTES
+// =========================
 
-// Uploaded images
-app.use(
-  "/uploads",
-  express.static("uploads")
-);
-
-
-// API
 app.get("/api", (req, res) => {
   res.json({
     message: "FindBack API is running!"
   });
 });
-
 
 app.get("/test", (req, res) => {
   res.json({
@@ -48,38 +46,40 @@ app.get("/test", (req, res) => {
   });
 });
 
-
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemRoutes);
 
-
-// Server
-const PORT = process.env.PORT || 5000;
+// =========================
+// DATABASE
+// =========================
 
 mongoose
   .connect(process.env.MONGO_URI)
-
   .then(() => {
-
     console.log("MongoDB connected successfully");
-
-    app.listen(PORT, () => {
-
-      console.log(
-        `Server running on port ${PORT}`
-      );
-
-    });
-
   })
-
   .catch((error) => {
-
     console.error(
       "MongoDB connection failed:",
       error.message
     );
-
   });
+
+// =========================
+// VERCEL EXPORT
+// =========================
+
+module.exports = app;
+
+// =========================
+// LOCAL DEVELOPMENT
+// =========================
+
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
