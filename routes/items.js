@@ -1,7 +1,5 @@
 const express = require("express");
 const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
 const Item = require("../models/item");
 
 const router = express.Router();
@@ -10,31 +8,10 @@ const router = express.Router();
 // IMAGE UPLOAD SETTINGS
 // =========================
 
-const uploadFolder = path.join(__dirname, "..", "uploads");
-
-// Create uploads folder automatically
-if (!fs.existsSync(uploadFolder)) {
-  fs.mkdirSync(uploadFolder, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadFolder);
-  },
-
-  filename: function (req, file, cb) {
-    const uniqueName =
-      Date.now() +
-      "-" +
-      Math.round(Math.random() * 1E9) +
-      path.extname(file.originalname);
-
-    cb(null, uniqueName);
-  }
-});
-
+// Vercel local filesystem is read-only.
+// Use memory storage instead of saving files to /uploads.
 const upload = multer({
-  storage: storage
+  storage: multer.memoryStorage()
 });
 
 // =========================
@@ -109,7 +86,7 @@ router.get("/", async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("GET ITEMS ERROR:", error);
 
     res.status(500).json({
       message: "Failed to load items"
@@ -130,7 +107,7 @@ router.post(
       console.log("Body:", req.body);
       console.log(
         "Image:",
-        req.file ? req.file.filename : "No image"
+        req.file ? req.file.originalname : "No image"
       );
 
       if (!req.body) {
@@ -165,9 +142,9 @@ router.post(
         });
       }
 
-      const image = req.file
-        ? "/uploads/" + req.file.filename
-        : null;
+      // Image is received in memory for now.
+      // Permanent cloud image storage will be added next.
+      const image = null;
 
       const item = await Item.create({
         title: title.trim(),
