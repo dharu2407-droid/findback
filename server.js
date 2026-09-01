@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const express = require("express");
@@ -29,6 +30,10 @@ app.use(express.json());
 // =========================
 
 app.use(express.static("public"));
+
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 // =========================
 // API ROUTES
@@ -77,7 +82,7 @@ module.exports = app;
 
 if (require.main === module) {
   const PORT = process.env.PORT || 5000;
-  
+
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
